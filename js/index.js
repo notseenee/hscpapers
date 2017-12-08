@@ -1,4 +1,4 @@
-var version = '1.7.1';
+var version = '1.8.0';
 
 /*------------------------------------------------------------------------------
 vars.js
@@ -113,6 +113,13 @@ function populateDropdown(json, searchFor, pushTo, reverse) {
 		console.error('Input JSON not an object: ' + json);
 		alert('Error:\n\nInput JSON not an object: ' + json);
 	}
+}
+
+// generalised function for different dropdowns to reduce repeated code
+function userSelect(elem, next,) {
+	$(elem).change( function() {
+		//
+	});
 }
 
 // when a course is selected, populate year dropdown
