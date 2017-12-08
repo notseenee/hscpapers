@@ -3,8 +3,7 @@ split.js
 ------------------------------------------------------------------------------*/
 
 var courseIndex2, yearIndex2, docLink2,
-selectedCourse2, selectedYear2, selectedDoc2,
-params;
+selectedCourse2, selectedYear2, selectedDoc2;
 
 // if url has ?mode=split, open split view immediately
 $(document).ready(function(){
