@@ -28,17 +28,66 @@ function populateDropdown(json, searchFor, pushTo, reverse) {
 }
 
 // generalised function for different dropdowns to reduce repeated code
-// function userSelect(elem, suffix, next,) {
-// 	var input = $('#' + elem + '-input' + suffix);
-// 	input.change( function() {
-// 		// get selected value
-// 		selected[elem] = input.value;
-// 		// add to new params
-// 		params[elem]
-// 	});
-// }
+function userSelect(
+	elem, suffix, next,
+	searchIn, searchFor, searchNext, elemValue, reverse,
+	finish) {
+	console.warn('userselect');
+	// save input DOM element
+	var input = $('#' + elem + '-input' + suffix);
+	// save next dropdown DOM element
+	if (next) {
+		var nextDropdown = $('#' + next + '-dropdown' + suffix);
+		var nextMenu = $('#' + next + '-menu' + suffix);
+	}
+	input.change( function() {
+	console.warn('input change');
+		// get selected value
+		selected[elem] = input[0].value;
+		// add to new params
+		params[elem] = selected[elem];
+		// add loading spinner to next dropdown
+		if (next) nextDropdown.addClass('loading').removeClass('disabled');
+		// loops through each element in json object to find index
+		for (k = 0; k < searchIn.length; k++) {
+			if (searchIn[k][searchFor].toLowerCase() == selected[elem]) {
+				selected[elemValue] = k;
+				break;
+			}
+		}
+		// if not found, throw an error
+		if (!selected[elemValue]) {
+			console.error(elem + ' not found');
+			alert(elem + ' not found');
+			return;
+		}
+		// next dropdown
+		if (next) {
+			// populates next dropdown
+			populateDropdown(
+				searchIn[selected[elemValue]][searchNext], next, nextMenu, reverse);
+			// activates next dropdown
+			nextDropdown
+				.removeClass('loading')
+				.dropdown('restore defaults')
+				.dropdown('show')
+				.dropdown({ selectOnKeydown: false });
+			// Select next from URL parameter
+			if (url[next]) {
+				nextDropdown
+					.dropdown('set selected', url[next])
+					.dropdown('hide');
+				// if not found
+				if ( !nextDropdown.dropdown('get value') ) urlNotFound(next);
+			}
+		}
+		// change url to new params
+		history.pushState(null, '', '?' + $.param(params) );
+		if (finish) finish();
+	});
+}
 
-// when a course is selected, populate year dropdown
+/* when a course is selected, populate year dropdown
 $('#course-input').change( function() {
 	// get selected value
 	selected.course = $('#course-input')[0].value;
@@ -71,7 +120,7 @@ $('#course-input').change( function() {
 	}
 	// change url to new params
 	history.pushState(null, '', '?' + $.param(params) );
-});
+});*/
 
 // when a year is selected, populate docs dropdown
 $('#year-input').change( function() {

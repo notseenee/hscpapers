@@ -71,6 +71,11 @@ function dataReceived(data) {
 	$('#course-dropdown2')
 		.removeClass('disabled')
 		.dropdown({ selectOnKeydown: false });
+	// Enable dropdown functionality
+	userSelect(
+		'course', '', 'year',
+		jsonData, 'course_name', 'packs', 'courseIndex', true);
+	
 	// Select course from URL parameter
 	if (url.course) {
 		$('#course-dropdown')
