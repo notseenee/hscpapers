@@ -10,13 +10,13 @@ $(document).ready(function(){
 	// show in about modal
 	$('#version').html(version);
 	// store url params
-	urlCourse = urlParam('course');
-	urlYear = urlParam('year');
-	urlDoc = urlParam('doc');
+	url.course = urlParam('course');
+	url.year = urlParam('year');
+	url.doc = urlParam('doc');
 	// store url params2
-	urlCourse2 = urlParam('course2');
-	urlYear2 = urlParam('year2');
-	urlDoc2 = urlParam('doc2');
+	url.course2 = urlParam('course2');
+	url.year2 = urlParam('year2');
+	url.doc2 = urlParam('doc2');
 	// open about window
 	if (urlParam('open') == 'about') $('#about-modal').modal('show');
 	// initialise new params object
@@ -72,17 +72,17 @@ function dataReceived(data) {
 		.removeClass('disabled')
 		.dropdown({ selectOnKeydown: false });
 	// Select course from URL parameter
-	if (urlCourse) {
+	if (url.course) {
 		$('#course-dropdown')
-			.dropdown('set selected', urlCourse)
+			.dropdown('set selected', url.course)
 			.dropdown('hide');
 		// if not found
 		if ( !$('#course-dropdown').dropdown('get value') ) urlNotFound('Course');
 	}
 	// Select course2 from URL parameter
-	if (urlCourse2) {
+	if (url.course2) {
 		$('#course-dropdown2')
-			.dropdown('set selected', urlCourse2)
+			.dropdown('set selected', url.course2)
 			.dropdown('hide');
 		// if not found
 		if ( !$('#course-dropdown2').dropdown('get value') ) urlNotFound('Course2');

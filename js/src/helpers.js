@@ -31,28 +31,28 @@ function urlNotFound(type) {
 	// show url params
 	switch(type) {
 		case 'Course':
-			write('Course', urlCourse, true);
+			write('Course', url.course, true);
 			break;
 		case 'Year':
-			write('Course', urlCourse, false);
-			write('Year', urlYear, true);
+			write('Course', url.course, false);
+			write('Year', url.year, true);
 			break;
 		case 'Doc':
-			write('Course', urlCourse, false);
-			write('Year', urlYear, false);
-			write('Doc', urlDoc, true);
+			write('Course', url.course, false);
+			write('Year', url.year, false);
+			write('Doc', url.doc, true);
 			break;
 		case 'Course2':
-			write('Course2', urlCourse2, true);
+			write('Course2', url.course2, true);
 			break;
 		case 'Year2':
-			write('Course2', urlCourse2, false);
-			write('Year2', urlYear2, true);
+			write('Course2', url.course2, false);
+			write('Year2', url.year2, true);
 			break;
 		case 'Doc2':
-			write('Course2', urlCourse2, false);
-			write('Year2', urlYear2, false);
-			write('Doc2', urlDoc2, true);
+			write('Course2', url.course2, false);
+			write('Year2', url.year2, false);
+			write('Doc2', url.doc2, true);
 	}
 
 	// show the modal
@@ -61,9 +61,9 @@ function urlNotFound(type) {
 			duration: 200,
 			onApprove: function() {
 				// clear urlParams variables
-				urlCourse = '';
-				urlYear = '';
-				urlDoc = '';
+				url.course = '';
+				url.year = '';
+				url.doc = '';
 				// show dropdown
 				setTimeout(function(){
 					$('#' + type.toLowerCase() + '-dropdown').dropdown('show');
