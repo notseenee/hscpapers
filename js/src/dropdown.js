@@ -28,9 +28,13 @@ function populateDropdown(json, searchFor, pushTo, reverse) {
 }
 
 // generalised function for different dropdowns to reduce repeated code
-// function userSelect(elem, next,) {
-// 	$(elem).change( function() {
-// 		//
+// function userSelect(elem, suffix, next,) {
+// 	var input = $('#' + elem + '-input' + suffix);
+// 	input.change( function() {
+// 		// get selected value
+// 		selected[elem] = input.value;
+// 		// add to new params
+// 		params[elem]
 // 	});
 // }
 
@@ -45,12 +49,12 @@ $('#course-input').change( function() {
 	// loops through each element in json object to find index
 	for (k = 0; k < jsonData.length; k++) {
 		if (jsonData[k].course_name.toLowerCase() == selected.course) {
-			selected.selected.courseIndex = k;
+			selected.courseIndex = k;
 			break;
 		}
 	}
 	// populates dropdown
-	populateDropdown(jsonData[selected.selected.courseIndex].packs, 'year', '#year-menu', true);
+	populateDropdown(jsonData[selected.courseIndex].packs, 'year', '#year-menu', true);
 	// activates year dropdown
 	$('#year-dropdown')
 		.removeClass('loading')
@@ -80,14 +84,14 @@ $('#year-input').change( function() {
 	// add loading spinner to year dropdown
 	$('#doc-dropdown').addClass('loading').removeClass('disabled');
 	// loops through each element in json object to find year index
-	for (l = 0; l < jsonData[selected.selected.courseIndex].packs.length; l++) {
-		if (jsonData[selected.selected.courseIndex].packs[l].year == selected.year) {
+	for (l = 0; l < jsonData[selected.courseIndex].packs.length; l++) {
+		if (jsonData[selected.courseIndex].packs[l].year == selected.year) {
 			selected.yearIndex = l;
 			break;
 		}
 	}
 	// populates dropdown
-	populateDropdown(jsonData[selected.selected.courseIndex].packs[selected.yearIndex].docs,
+	populateDropdown(jsonData[selected.courseIndex].packs[selected.yearIndex].docs,
 		'doc_name', '#doc-menu', false);
 	// activate doc dropdown
 	$('#doc-dropdown')
@@ -105,7 +109,7 @@ $('#year-input').change( function() {
 	// activate exam pack buttons and adds link
 	$('.button-exampack')
 		.removeClass('disabled')
-		.attr('href', jsonData[selected.selected.courseIndex].packs[selected.yearIndex].link);
+		.attr('href', jsonData[selected.courseIndex].packs[selected.yearIndex].link);
 	// change url to new params
 	history.pushState(null, '', '?' + $.param(params) );
 });
@@ -119,10 +123,10 @@ $('#doc-input').change( function(){
 	// add to new params
 	params.doc = selected.doc;
 	// loops thorugh each doc to find doc index
-	for (m = 0; m < jsonData[selected.selected.courseIndex].packs[selected.yearIndex].docs.length; m++) {
-		if (jsonData[selected.selected.courseIndex].packs[selected.yearIndex].docs[m].doc_name.toLowerCase() ==
+	for (m = 0; m < jsonData[selected.courseIndex].packs[selected.yearIndex].docs.length; m++) {
+		if (jsonData[selected.courseIndex].packs[selected.yearIndex].docs[m].doc_name.toLowerCase() ==
 			selected.doc) {
-			selected.docLink = jsonData[selected.selected.courseIndex].packs[selected.yearIndex].docs[m].doc_link;
+			selected.docLink = jsonData[selected.courseIndex].packs[selected.yearIndex].docs[m].doc_link;
 			// force https
 			selected.docLink = selected.docLink.replace('http', 'https');
 			break;
