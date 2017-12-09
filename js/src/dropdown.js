@@ -32,16 +32,18 @@ function userSelect(
 	elem, suffix, next,
 	searchIn, searchFor, searchNext, elemValue, reverse,
 	finish) {
-	console.warn('userselect');
-	// save input DOM element
-	var input = $('#' + elem + '-input' + suffix);
-	// save next dropdown DOM element
-	if (next) {
-		var nextDropdown = $('#' + next + '-dropdown' + suffix);
-		var nextMenu = $('#' + next + '-menu' + suffix);
-	}
-	input.change( function() {
-	console.warn('input change');
+	console.warn('bound change event for ' + elem);
+	$('#' + elem + '-input' + suffix).change( function() {
+	console.warn('trigger change event for ' + elem);
+		// save input DOM element
+		var input = $('#' + elem + '-input' + suffix);
+		// if this is blank for some reason, ignore
+		if (input[0].value === '') return;
+		// save next dropdown DOM element
+		if (next) {
+			var nextDropdown = $('#' + next + '-dropdown' + suffix);
+			var nextMenu = $('#' + next + '-menu' + suffix);
+		}
 		// get selected value
 		selected[elem] = input[0].value;
 		// add to new params
@@ -87,81 +89,46 @@ function userSelect(
 	});
 }
 
-/* when a course is selected, populate year dropdown
-$('#course-input').change( function() {
-	// get selected value
-	selected.course = $('#course-input')[0].value;
-	// add to new params
-	params.course = selected.course;
-	// add loading spinner to year dropdown
-	$('#year-dropdown').addClass('loading').removeClass('disabled');
-	// loops through each element in json object to find index
-	for (k = 0; k < jsonData.length; k++) {
-		if (jsonData[k].course_name.toLowerCase() == selected.course) {
-			selected.courseIndex = k;
-			break;
-		}
-	}
-	// populates dropdown
-	populateDropdown(jsonData[selected.courseIndex].packs, 'year', '#year-menu', true);
-	// activates year dropdown
-	$('#year-dropdown')
-		.removeClass('loading')
-		.dropdown('restore defaults')
-		.dropdown('show')
-		.dropdown({ selectOnKeydown: false });
-	// Select year from URL parameter
-	if (url.year) {
-		$('#year-dropdown')
-			.dropdown('set selected', url.year)
-			.dropdown('hide');
-		// if not found
-		if ( !$('#year-dropdown').dropdown('get value') ) urlNotFound('Year');
-	}
-	// change url to new params
-	history.pushState(null, '', '?' + $.param(params) );
-});*/
-
-// when a year is selected, populate docs dropdown
-$('#year-input').change( function() {
-	// if year is blank for some reason, ignore
-	if ($(this)[0].value === '') return;
-	// get selected year
-	selected.year = $('#year-input')[0].value;
-	// add to new params
-	params.year = selected.year;
-	// add loading spinner to year dropdown
-	$('#doc-dropdown').addClass('loading').removeClass('disabled');
-	// loops through each element in json object to find year index
-	for (l = 0; l < jsonData[selected.courseIndex].packs.length; l++) {
-		if (jsonData[selected.courseIndex].packs[l].year == selected.year) {
-			selected.yearIndex = l;
-			break;
-		}
-	}
-	// populates dropdown
-	populateDropdown(jsonData[selected.courseIndex].packs[selected.yearIndex].docs,
-		'doc_name', '#doc-menu', false);
-	// activate doc dropdown
-	$('#doc-dropdown')
-		.removeClass('loading')
-		.dropdown('restore defaults')
-		.dropdown('show');
-	// Select doc from URL parameter
-	if (url.doc) {
-		$('#doc-dropdown')
-			.dropdown('set selected', url.doc)
-			.dropdown('hide');
-		// if not found
-		if ( !$('#doc-dropdown').dropdown('get value') ) urlNotFound('Doc');
-	}
-	// activate exam pack buttons and adds link
-	$('.button-exampack')
-		.removeClass('disabled')
-		.attr('href', jsonData[selected.courseIndex].packs[selected.yearIndex].link);
-	// change url to new params
-	history.pushState(null, '', '?' + $.param(params) );
-});
+// // when a year is selected, populate docs dropdown
+// $('#year-input').change( function() {
+// 	// if year is blank for some reason, ignore
+// 	if ($(this)[0].value === '') return;
+// 	// get selected year
+// 	selected.year = $('#year-input')[0].value;
+// 	// add to new params
+// 	params.year = selected.year;
+// 	// add loading spinner to year dropdown
+// 	$('#doc-dropdown').addClass('loading').removeClass('disabled');
+// 	// loops through each element in json object to find year index
+// 	for (l = 0; l < jsonData[selected.courseIndex].packs.length; l++) {
+// 		if (jsonData[selected.courseIndex].packs[l].year == selected.year) {
+// 			selected.yearIndex = l;
+// 			break;
+// 		}
+// 	}
+// 	// populates dropdown
+// 	populateDropdown(jsonData[selected.courseIndex].packs[selected.yearIndex].docs,
+// 		'doc_name', '#doc-menu', false);
+// 	// activate doc dropdown
+// 	$('#doc-dropdown')
+// 		.removeClass('loading')
+// 		.dropdown('restore defaults')
+// 		.dropdown('show');
+// 	// Select doc from URL parameter
+// 	if (url.doc) {
+// 		$('#doc-dropdown')
+// 			.dropdown('set selected', url.doc)
+// 			.dropdown('hide');
+// 		// if not found
+// 		if ( !$('#doc-dropdown').dropdown('get value') ) urlNotFound('Doc');
+// 	}
+// 	// activate exam pack buttons and adds link
+// 	$('.button-exampack')
+// 		.removeClass('disabled')
+// 		.attr('href', jsonData[selected.courseIndex].packs[selected.yearIndex].link);
+// 	// change url to new params
+// 	history.pushState(null, '', '?' + $.param(params) );
+// });
 
 // when a doc is selected, open it
 $('#doc-input').change( function(){

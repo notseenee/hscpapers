@@ -74,8 +74,19 @@ function dataReceived(data) {
 	// Enable dropdown functionality
 	userSelect(
 		'course', '', 'year',
-		jsonData, 'course_name', 'packs', 'courseIndex', true);
-	
+		jsonData, 'course_name', 'packs', 'courseIndex', true
+	);
+	userSelect(
+		'year', '', 'doc',
+		jsonData[selected.courseIndex].packs, 'year', 'docs', yearIndex, false,
+		function(){
+			// activate exam pack buttons and adds link
+			$('.button-exampack')
+				.removeClass('disabled')
+				.attr('href',
+					jsonData[selected.courseIndex].packs[selected.yearIndex].link);
+		}
+	);
 	// Select course from URL parameter
 	if (url.course) {
 		$('#course-dropdown')
